@@ -64,6 +64,37 @@ swm_df =
     runtime = swm_runtime_vec)
 ```
 
+## Use APIs
 
+getting a csv
+
+```{r}
+nyc_water_df = 
+  GET("https://data.cityofnewyork.us/api/v3/views/ia2d-e54m/query.csv") |> 
+  content("parsed") |> 
+  select(year:per_capita_gallons_per_person_per_day)
+```
+
+get a json file
+
+```{r}
+nyc_water_json = 
+  GET("https://data.cityofnewyork.us/api/v3/views/ia2d-e54m/query.json")
+
+nyc_water_json |> 
+  content("text") |> 
+  jsonlite::fromJSON() |>
+  as_tibble()
+```
+
+## pokemon data
+
+```{r}
+pokemon = 
+  GET("http://pokeapi.co/api/v2/pokemon/1") |>
+  content()
+
+pokemon[["name"]]
+```
 
 

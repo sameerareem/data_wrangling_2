@@ -409,6 +409,57 @@ swm_df =
     title = swm_title_vec,
     score = swm_metascore_vec,
     runtime = swm_runtime_vec)</code></pre>
+<div id="use-apis" class="section level2">
+<h2>Use APIs</h2>
+<p>getting a csv</p>
+<pre class="r"><code>nyc_water_df = 
+  GET(&quot;https://data.cityofnewyork.us/api/v3/views/ia2d-e54m/query.csv&quot;) |&gt; 
+  content(&quot;parsed&quot;) |&gt; 
+  select(year:per_capita_gallons_per_person_per_day)</code></pre>
+<pre><code>## Rows: 65 Columns: 8
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr  (2): :id, :version
+## dbl  (4): year, new_york_city_population, nyc_consumption_million_gallons_pe...
+## dttm (2): :created_at, :updated_at
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<p>get a json file</p>
+<pre class="r"><code>nyc_water_json = 
+  GET(&quot;https://data.cityofnewyork.us/api/v3/views/ia2d-e54m/query.json&quot;)
+
+nyc_water_json |&gt; 
+  content(&quot;text&quot;) |&gt; 
+  jsonlite::fromJSON() |&gt;
+  as_tibble()</code></pre>
+<pre><code>## # A tibble: 65 × 8
+##    `:id`     `:version` `:created_at` `:updated_at` year  new_york_city_popula…¹
+##    &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;         &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;                 
+##  1 row-x39v… rv-r9ar.m… 2025-05-21T1… 2025-05-21T1… 2024  8478000               
+##  2 row-x93m… rv-z5hd_u… 2025-05-21T1… 2025-05-21T1… 2023  8391000               
+##  3 row-8j2p… rv-x2r5-a… 2025-05-21T1… 2025-05-21T1… 2022  8356000               
+##  4 row-ta23… rv-jh2h_s… 2025-05-21T1… 2025-05-21T1… 2021  8454000               
+##  5 row-cx97… rv-832y~c… 2025-05-21T1… 2025-05-21T1… 2020  8804190               
+##  6 row-9v2r… rv-7ubj~q… 2025-05-21T1… 2025-05-21T1… 2019  8824751               
+##  7 row-jwzx… rv-hium_k… 2025-05-21T1… 2025-05-21T1… 2018  8826377               
+##  8 row-cmhu… rv-gt4s.z… 2025-05-21T1… 2025-05-21T1… 2017  8815395               
+##  9 row-f6tv… rv-cn36_8… 2025-05-21T1… 2025-05-21T1… 2016  8794592               
+## 10 row-2amp… rv-2k2n.b… 2025-05-21T1… 2025-05-21T1… 2015  8736590               
+## # ℹ 55 more rows
+## # ℹ abbreviated name: ¹​new_york_city_population
+## # ℹ 2 more variables: nyc_consumption_million_gallons_per_day &lt;chr&gt;,
+## #   per_capita_gallons_per_person_per_day &lt;chr&gt;</code></pre>
+</div>
+<div id="pokemon-data" class="section level2">
+<h2>pokemon data</h2>
+<pre class="r"><code>pokemon = 
+  GET(&quot;http://pokeapi.co/api/v2/pokemon/1&quot;) |&gt;
+  content()
+
+pokemon[[&quot;name&quot;]]</code></pre>
+<pre><code>## [1] &quot;bulbasaur&quot;</code></pre>
+</div>
 
 
 
